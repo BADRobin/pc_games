@@ -1,23 +1,23 @@
 package dci.j24e01.pc_games;
 
 public class Game {
-    private long id;
+    private Long id;
     private String name;
-    private String category;
+    private Long category_id;
     private double price;
 
-    public Game(long id, String name, String category, double price) {
+    public Game(Long id, String name, Long category_id, double price) {
         this.id = id;
         this.name = name;
-        this.category = category;
+        this.category_id = category_id;
         this.price = price;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -29,12 +29,12 @@ public class Game {
         this.name = name;
     }
 
-    public String getCategory() {
-        return category;
+    public Long getCategory_id() {
+        return category_id;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setCategory_id(Long category_id) {
+        this.category_id = category_id;
     }
 
     public double getPrice() {
@@ -50,7 +50,7 @@ public class Game {
         return "Game{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", category='" + category + '\'' +
+                ", category_id=" + category_id +
                 ", price=" + price +
                 '}';
     }

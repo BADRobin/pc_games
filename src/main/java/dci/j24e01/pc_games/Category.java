@@ -1,19 +1,19 @@
 package dci.j24e01.pc_games;
 
 public class Category {
-    private long id;
+    private Long id;
     private String category;
 
-    public Category(long id, String category) {
+    public Category(Long id, String category) {
         this.id = id;
         this.category = category;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
