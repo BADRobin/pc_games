@@ -2,11 +2,11 @@ package dci.j24e01.pc_games;
 
 public class Category {
     private Long id;
-    private String category;
+    private String name;
 
-    public Category(Long id, String category) {
+    public Category(Long id, String name) {
         this.id = id;
-        this.category = category;
+        this.name = name;
     }
 
     public Long getId() {
@@ -17,19 +17,19 @@ public class Category {
         this.id = id;
     }
 
-    public String getCategory() {
-        return category;
+    public String getName() {
+        return name;
     }
 
-    public void setCategory(String category) {
-        this.category = category;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Override
     public String toString() {
         return "Category{" +
                 "id=" + id +
-                ", category='" + category + '\'' +
+                ", category='" + name + '\'' +
                 '}';
     }
 }

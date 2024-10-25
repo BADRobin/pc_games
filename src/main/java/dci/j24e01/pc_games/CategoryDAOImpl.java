@@ -18,17 +18,17 @@ public class CategoryDAOImpl implements CategoryDAO {
     @Override
     public List<Category> getCategories() {
 
-        String sql = "SELECT * FROM category";
+        String sql = "SELECT * FROM categories";
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-            System.out.println(resultSet);
+//            System.out.println(resultSet);
 
             List<Category> categories = new ArrayList<>();
             while (resultSet.next()) {
                 Category category = new Category(
-                        resultSet.getLong("id_categories"),
+                        resultSet.getLong("id_category"),
                         resultSet.getString("name")
 
                 );
@@ -39,6 +39,26 @@ public class CategoryDAOImpl implements CategoryDAO {
             e.printStackTrace();
             return null;
         }
+    }
+
+    @Override
+    public Category getCategoryById(Long id) {
+        String sql = "SELECT * FROM categories WHERE id_category = ?";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return new Category(
+                        resultSet.getLong("id_category"),
+                        resultSet.getString("name")
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
 

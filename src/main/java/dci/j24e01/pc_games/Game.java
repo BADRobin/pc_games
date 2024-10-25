@@ -3,14 +3,18 @@ package dci.j24e01.pc_games;
 public class Game {
     private Long id;
     private String name;
-    private Long category_id;
+    private Long categoryId;
     private double price;
 
-    public Game(Long id, String name, Long category_id, double price) {
+    public Game(Long id, String name, Long categoryId, double price) {
         this.id = id;
         this.name = name;
-        this.category_id = category_id;
+        this.categoryId = categoryId;
         this.price = price;
+    }
+
+    public Game() {
+
     }
 
     public Long getId() {
@@ -29,12 +33,12 @@ public class Game {
         this.name = name;
     }
 
-    public Long getCategory_id() {
-        return category_id;
+    public Long getCategoryId() {
+        return categoryId;
     }
 
-    public void setCategory_id(Long category_id) {
-        this.category_id = category_id;
+    public void setCategoryId(Long categoryId) {
+        this.categoryId = categoryId;
     }
 
     public double getPrice() {
@@ -50,7 +54,7 @@ public class Game {
         return "Game{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", category_id=" + category_id +
+                ", category_id=" + categoryId +
                 ", price=" + price +
                 '}';
     }

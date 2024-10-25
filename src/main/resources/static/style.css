@@ -29,7 +29,15 @@ header {
     user-select: none;
     font-weight: 600;
 }
-
+table{
+    background-color: #FFFFFFFF;
+}
+.table-striped{
+    background-color: #FFFFFFFF;
+}
+#table-games{
+    background-color: #FFFFFFFF;
+}
 .menu a {
     font-size: 0.8em;
     color: #fff;
@@ -59,6 +67,8 @@ a.active {
     background-position: center;
     background-attachment: fixed;
 }
+
+
 
 #heading {
     position: absolute;
