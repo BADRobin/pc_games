@@ -12,14 +12,14 @@
         <tr>
             <th>ID</th>
             <th>Name</th>
-            <th>Category ID</th>
+            <th>Category</th>
             <th>Price</th>
             <th>Actions</th>
         </tr>
         <tr th:each="game : ${games}">
             <td th:text="${game.id}"></td>
             <td th:text="${game.name}"></td>
-            <td th:text="${game.categoryId}"></td>
+            <td th:text="${categoryMap[game.categoryId]}"></td>
             <td th:text="${game.price}"></td>
             <td>
                 <a th:href="@{/games/edit/{id}(id=${game.id})}">Edit</a> |

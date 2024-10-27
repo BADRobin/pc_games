@@ -1,9 +1,6 @@
 package dci.j24e01.pc_games;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,7 +18,7 @@ public class GameDAOImpl implements GameDAO {
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
 
             ResultSet resultSet = preparedStatement.executeQuery();
-//            System.out.println(resultSet);
+
 
             List<Game> games = new ArrayList<>();
             while (resultSet.next()) {
@@ -66,12 +63,14 @@ public class GameDAOImpl implements GameDAO {
     public void addGame(Game game) {
         String sql = "INSERT INTO pc_games (name, category_id, price) VALUES (?, ?, ?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
             preparedStatement.setString(1, game.getName());
-            preparedStatement.setLong(2, game.getCategoryId());
+            if (game.getCategoryId() != null) {
+                preparedStatement.setLong(2, game.getCategoryId());
+            } else {
+                preparedStatement.setNull(2, Types.BIGINT);
+            }
             preparedStatement.setDouble(3, game.getPrice());
             preparedStatement.executeUpdate();
-
         } catch (SQLException e) {
             e.printStackTrace();
         }

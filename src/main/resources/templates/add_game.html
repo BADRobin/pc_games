@@ -6,25 +6,22 @@
 <body>
 <div class="parallax">
 <h1>Add New Game</h1>
-<form action="/games/save" method="post">
-  <input type="hidden" th:field="${game.id}"/>
+  <form action="/games/save" method="post">
 
-  <label>Name: </label>
-  <input type="text" th:field="${game.name}" required/><br/>
+    <h2>Game Details</h2>
+    <label>Name: </label>
+    <input type="text" th:field="${game.name}" required/><br/>
 
-  <label>Category: </label>
-  <select th:field="${game.categoryId}">
-    <option th:each="category : ${categories}"
-            th:value="${category.id}"
-            th:text="${category.name}"></option>
-  </select><br/>
+    <label>Price: </label>
+    <input type="number" th:field="${game.price}" step="0.01" required/><br/>
 
-  <label>Price: </label>
-  <input type="number" th:field="${game.price}" step="0.01" required/><br/>
+    <h2>Category Details</h2>
+    <label>Category Name: </label>
+    <input type="text" th:field="${category.name}" required/><br/>
 
-  <button type="submit">Add Game</button>
-  <a href="/game_list">Cancel</a>
-</form>
+    <button type="submit">Add Game with New Category</button>
+    <a href="/game_list">Cancel</a>
+  </form>
 </div>
 </body>
 </html>
