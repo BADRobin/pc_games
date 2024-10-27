@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Confirm Delete</title>
+</head>
+<body>
+<h1>Confirm Delete</h1>
+<p>Are you sure you want to delete the game "<span th:text="${game.name}"></span>"?</p>
+
+<form action="/games/delete" method="post">
+  <input type="hidden" name="id" th:value="${game.id}"/>
+  <button type="submit">Yes, Delete</button>
+  <a href="/games_list">Cancel</a>
+</form>
+</body>
+</html>

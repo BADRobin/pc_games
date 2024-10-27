@@ -2,14 +2,10 @@ package dci.j24e01.pc_games;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 
 @Controller
@@ -23,20 +19,13 @@ public class AppController {
         return "index";
     }
 
-    @GetMapping("/game_list")
-    private String game_list(Model model) {
+    @GetMapping("/games_list")
+    public String gameList(Model model) {
         List<Game> games = gameDAO.getGames();
-        List<Category> categories = categoryDAO.getCategories();
-
-        Map<Long, String> categoryMap = new HashMap<>();
-        for (Category category : categories) {
-            categoryMap.put(category.getId(), category.getName());
-        }
-
         model.addAttribute("games", games);
-        model.addAttribute("categoryMap", categoryMap);
         return "games_list";
     }
+
 
     @GetMapping("/categories_list")
     private String categories_list(Model model) {
@@ -47,36 +36,54 @@ public class AppController {
 
     @GetMapping("/games/add")
     public String showAddGameForm(Model model) {
-
         model.addAttribute("game", new Game());
-        model.addAttribute("category", new Category());
-        return "add_game";      }
-
+        return "add_game";
+    }
 
     @PostMapping("/games/save")
-    public String saveGameWithCategory(
-            @ModelAttribute("game") Game game,
-            @ModelAttribute("category") Category category) {
-        categoryDAO.addCategory(category);
-        game.setCategoryId(category.getId());
+    public String saveGame(@ModelAttribute("game") Game game) {
         gameDAO.addGame(game);
-
-        return "redirect:/game_list";
-
+        return "redirect:/games_list";
     }
 
     @GetMapping("/games/edit/{id}")
     public String showEditGameForm(@PathVariable("id") Long id, Model model) {
         Game game = gameDAO.getGameById(id);
-        List<Category> categories = categoryDAO.getCategories();
         model.addAttribute("game", game);
-        model.addAttribute("categories", categories);
         return "game-form";
     }
+    @PostMapping("/games/update")
+    public String updateGame(@ModelAttribute("game") Game game,
+                             @RequestParam("categoryName") String categoryName) {
+        Long categoryId = game.getCategoryId();
+        if (categoryName != null && !categoryName.trim().isEmpty()) {
+            categoryId = categoryDAO.findOrCreateCategoryByName(categoryName);
+        }
 
+        if (categoryId == null) {
+            throw new RuntimeException("Category must be provided for the game.");
+        }
+        if (categoryId == null || categoryId <= 0) {
+            if (categoryName != null && !categoryName.trim().isEmpty()) {
+                categoryId = categoryDAO.findOrCreateCategoryByName(categoryName);
+            } else {
+                throw new RuntimeException("A category must be selected or created.");
+            }
+        }
+
+        game.setCategoryId(categoryId);
+        gameDAO.updateGame(game);
+        return "redirect:/games_list";
+    }
     @GetMapping("/games/delete/{id}")
-    public String deleteGame(@PathVariable("id") Long id) {
+    public String deleteGame(@PathVariable("id") Long id, Model model) {
+        Game game = gameDAO.getGameById(id);
+        model.addAttribute("game", game);
+        return "confirm_delete";
+    }
+    @PostMapping("/games/delete")
+    public String confirmDelete(@RequestParam("id") Long id) {
         gameDAO.deleteGame(id);
-        return "redirect:/game_list";
+        return "redirect:/games_list";
     }
 }

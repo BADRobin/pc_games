@@ -6,23 +6,24 @@
 </head>
 <body>
 <h1 th:text="${game.id == null ? 'Add New Game' : 'Edit Game'}"></h1>
-<form action="/games/save" method="post">
-    <input type="hidden" th:field="${game.id}" />
-    <label>Name: </label>
-    <input type="text" th:field="${game.name}" required/><br>
+<form th:action="@{/games/update}" th:object="${game}" method="post">
 
-    <label>Category ID: </label>
-    <select th:field="${game.categoryId}">
-        <option th:each="category : ${categories}"
-                th:value="${category.id}"
-                th:text="${category.name}"></option>
-    </select><br>
+    <input type="hidden" th:value="${game.id}" name="id" />
 
-    <label>Price: </label>
-    <input type="number" th:field="${game.price}" step="0.01" required/><br>
+    <label for="name">Game Name:</label>
+    <input type="text" id="name" th:value="${game.name}" name="name" required />
 
-    <button type="submit">Save</button>
-    <a href="/games">Cancel</a>
+
+    <label for="price">Price:</label>
+    <input type="number" id="price" th:value="${game.price}" name="price" required />
+
+
+    <label for="categoryName">New Category (if needed):</label>
+    <input type="text" id="categoryName" th:value="${game.categoryName}" name="categoryName" placeholder="Enter new category name" />
+
+
+    <button type="submit">Update Game</button>
+    <a href="/games_list">Cancel</a>
 </form>
 </body>
 </html>

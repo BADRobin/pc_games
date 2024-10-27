@@ -4,7 +4,8 @@ public class Game {
     private Long id;
     private String name;
     private Long categoryId;
-    private double price;
+    private Double price;
+    private String categoryName;
 
     public Game(Long id, String name, Long categoryId, double price) {
         this.id = id;
@@ -15,6 +16,14 @@ public class Game {
 
     public Game() {
 
+    }
+
+    public Game(Long id, String name, Long categoryId, Double price, String categoryName) {
+        this.id = id;
+        this.name = name;
+        this.categoryId = categoryId;
+        this.price = price;
+        this.categoryName = categoryName;
     }
 
     public Long getId() {
@@ -41,12 +50,20 @@ public class Game {
         this.categoryId = categoryId;
     }
 
-    public double getPrice() {
+    public Double getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
     }
 
     @Override
@@ -54,8 +71,9 @@ public class Game {
         return "Game{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", category_id=" + categoryId +
+                ", categoryId=" + categoryId +
                 ", price=" + price +
+                ", categoryName='" + categoryName + '\'' +
                 '}';
     }
 }

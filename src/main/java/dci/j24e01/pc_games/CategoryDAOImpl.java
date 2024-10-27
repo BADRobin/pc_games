@@ -11,7 +11,32 @@ public class CategoryDAOImpl implements CategoryDAO {
     public CategoryDAOImpl(DBConnectionManager connectionManager) {
         this.connection = connectionManager.getConnection();
     }
+    @Override
+    public Long findOrCreateCategoryByName(String categoryName) {
+        String findSql = "SELECT id_category FROM categories WHERE name = ?";
+        try (PreparedStatement findStatement = connection.prepareStatement(findSql)) {
+            findStatement.setString(1, categoryName);
+            ResultSet resultSet = findStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getLong("id_category");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
+        String insertSql = "INSERT INTO categories (name) VALUES (?)";
+        try (PreparedStatement insertStatement = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
+            insertStatement.setString(1, categoryName);
+            insertStatement.executeUpdate();
+            ResultSet generatedKeys = insertStatement.getGeneratedKeys();
+            if (generatedKeys.next()) {
+                return generatedKeys.getLong(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     @Override
     public List<Category> getCategories() {
 
